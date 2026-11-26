@@ -48,6 +48,27 @@ class CampoValidadoTest {
         });
     }
 
+    @Test
+    void validaElLimiteYSeActualizaAlCambiarlo() throws Exception {
+        enJavaFx(() -> {
+            CampoValidado campo = new CampoValidado();
+            List<Boolean> cambios = new ArrayList<>();
+            campo.addEventHandler(ValidezCambiada.TIPO, evento -> cambios.add(evento.isValido()));
+
+            assertEquals(60, campo.getLongitudMaxima());
+            campo.setTexto("a".repeat(60));
+            assertTrue(campo.isValido());
+            campo.setTexto("a".repeat(60) + "😀");
+            assertFalse(campo.isValido());
+            campo.setLongitudMaxima(61);
+            assertTrue(campo.isValido());
+            campo.longitudMaximaProperty().set(59);
+            assertFalse(campo.isValido());
+            assertEquals("a".repeat(60) + "😀", campo.getTexto());
+            assertEquals(List.of(false, true, false), cambios);
+        });
+    }
+
     private void enJavaFx(Runnable prueba) throws Exception {
         FutureTask<Void> tarea = new FutureTask<>(prueba, null);
         Platform.runLater(tarea);

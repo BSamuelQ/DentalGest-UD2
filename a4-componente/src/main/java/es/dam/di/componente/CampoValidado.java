@@ -8,14 +8,16 @@ import javafx.scene.layout.VBox;
 
 /**
  * Campo de texto reutilizable. La etiqueta inicial es «Campo» y el texto
- * vacío es válido hasta que se marca como obligatorio. Emite
+ * vacío es válido hasta que se marca como obligatorio. Admite hasta 60
+ * caracteres por defecto. Emite
  * {@link ValidezCambiada} cuando cambia su validez, incluso al cambiar
- * la obligatoriedad. Cambiar el rótulo no dispara el evento.
+ * la obligatoriedad o el límite. Cambiar el rótulo no dispara el evento.
  */
 public class CampoValidado extends VBox {
     private final TextField entrada = new TextField();
     private final StringProperty etiqueta = new SimpleStringProperty(this, "etiqueta", "Campo");
     private final BooleanProperty obligatorio = new SimpleBooleanProperty(this, "obligatorio", false);
+    private final IntegerProperty longitudMaxima = new SimpleIntegerProperty(this, "longitudMaxima", 60);
     private final ReadOnlyBooleanWrapper valido = new ReadOnlyBooleanWrapper(this, "valido", true);
 
     /** Construye el campo con sus valores por defecto. */
@@ -23,12 +25,19 @@ public class CampoValidado extends VBox {
         Label rotulo = new Label();
         rotulo.textProperty().bind(etiqueta);
         rotulo.setLabelFor(entrada);
-        Label error = new Label("Completa este campo.");
+        Label error = new Label();
         error.getStyleClass().add("error");
+        error.textProperty().bind(Bindings.createStringBinding(() -> {
+            String texto = getTexto();
+            int limite = Math.max(0, getLongitudMaxima());
+            if (texto.codePointCount(0, texto.length()) > limite) {
+                return "Introduce como máximo " + limite + " caracteres.";
+            }
+            return isObligatorio() && texto.isBlank() ? "Completa este campo." : "";
+        }, obligatorio, longitudMaxima, entrada.textProperty()));
+        valido.bind(error.textProperty().isEmpty());
         error.visibleProperty().bind(valido.not());
         error.managedProperty().bind(error.visibleProperty());
-        valido.bind(Bindings.createBooleanBinding(
-                () -> !isObligatorio() || !getTexto().isBlank(), obligatorio, entrada.textProperty()));
         valido.addListener((observable, anterior, actual) -> fireEvent(new ValidezCambiada(actual)));
         setSpacing(8);
         getChildren().addAll(rotulo, entrada, error);
@@ -55,6 +64,18 @@ public class CampoValidado extends VBox {
 
     /** {@return propiedad de obligatoriedad, inicialmente falsa} */
     public final BooleanProperty obligatorioProperty() { return obligatorio; }
+
+    /** {@return límite configurado de caracteres Unicode, inicialmente 60} */
+    public final int getLongitudMaxima() { return longitudMaxima.get(); }
+
+    /**
+     * Ajusta el límite sin modificar el texto del campo.
+     * @param valor máximo de caracteres, con valores negativos interpretados como cero
+     */
+    public final void setLongitudMaxima(int valor) { longitudMaxima.set(valor); }
+
+    /** {@return propiedad observable del límite de caracteres Unicode} */
+    public final IntegerProperty longitudMaximaProperty() { return longitudMaxima; }
 
     /** {@return texto introducido} */
     public final String getTexto() { return entrada.getText(); }
