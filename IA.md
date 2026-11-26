@@ -2,13 +2,10 @@
 
 Se utilizó Codex para preparar y comprobar el borrador de la práctica. Los materiales de partida fueron el cuaderno de la UD2, la guía de instalación y el diseño de DentalGest de la UD1.
 
-## Instrucción usada
+## Resumen de las instrucciones dadas a Codex
 
-> Puedes hacer tu eso? toda la practica incluyendo las capturas?
-
-> Aplica esa corrección
-
-La segunda instrucción se refiere a añadir una longitud máxima configurable de 60 caracteres a `CampoValidado`.
+- Preparar un borrador de las cuatro actividades de la UD2 para DentalGest con JavaFX y Maven, tomando como referencia el cuaderno de actividades, la guía de instalación y el diseño de la UD1. Ejecutar la aplicación y obtener las capturas solicitadas.
+- Añadir a `CampoValidado` un límite configurable de 60 caracteres por defecto y comprobar la validación justo en el límite y al superarlo.
 
 Se conservaron las versiones de Java, JavaFX y JUnit de la guía. Para la actividad 4, el borrador incluye un campo reutilizable de texto con etiqueta y obligatoriedad configurables, un evento de cambio de validez, dos pruebas y la integración en el alta rápida de la agenda.
 
