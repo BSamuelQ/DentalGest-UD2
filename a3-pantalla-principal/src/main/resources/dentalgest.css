@@ -1,0 +1,45 @@
+.root {
+    -fx-font-family: "Liberation Sans";
+    -fx-font-size: 16px;
+    -fx-base: #F1F5F9;
+    -fx-background: #F1F5F9;
+    -fx-control-inner-background: #F1F5F9;
+    -fx-control-inner-background-alt: #F1F5F9;
+    -fx-text-base-color: #334155;
+    -fx-text-background-color: #334155;
+    -fx-focus-color: #0F766E;
+    -fx-faint-focus-color: transparent;
+}
+.label, .text-input, .hyperlink { -fx-text-fill: #334155; }
+.cabecera { -fx-background-color: #334155; -fx-padding: 16px; }
+.cabecera .label { -fx-text-fill: #F1F5F9; }
+.marca, .titulo { -fx-font-size: 24px; -fx-font-weight: bold; }
+.lateral {
+    -fx-padding: 16px;
+    -fx-border-color: #334155;
+    -fx-border-width: 0 1px 0 0;
+}
+.button {
+    -fx-min-height: 40px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-background-color: #F1F5F9;
+    -fx-border-color: #334155;
+    -fx-text-fill: #334155;
+}
+.button:focused, .hyperlink:focused { -fx-border-color: #0F766E; }
+.button.accion { -fx-background-color: #0F766E; -fx-text-fill: #F1F5F9; -fx-border-color: #0F766E; }
+.hyperlink { -fx-underline: true; -fx-font-size: 13px; -fx-padding: 4px; }
+.text-field { -fx-min-height: 40px; -fx-prompt-text-fill: #334155; }
+.table-view { -fx-background-color: #F1F5F9; -fx-border-color: #334155; }
+.table-view .column-header, .table-view .filler, .table-row-cell {
+    -fx-background-color: #F1F5F9;
+}
+.table-row-cell:filled:selected { -fx-background-color: #334155; }
+.table-row-cell:filled:selected .table-cell, .table-row-cell:filled:selected .hyperlink { -fx-text-fill: #F1F5F9; }
+.table-cell { -fx-text-fill: #334155; -fx-alignment: CENTER-LEFT; }
+.estado { -fx-padding: 8px 16px; -fx-border-color: #334155; -fx-border-width: 1px 0 0 0; }
+.estado .label, .error { -fx-font-size: 13px; }
+.aviso { -fx-text-fill: #B54708; }
+.error { -fx-text-fill: #B42318; }
